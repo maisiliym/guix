@@ -275,8 +275,8 @@ as base32.  Otherwise, it must be a bytevector."
              (default '()) (delayed))
 
   (snippet   origin-snippet (default #f))         ; sexp or #f
-  (patch-flags  origin-patch-flags                ; list of strings
-                (default '("-p1")))
+  (patch-flags  origin-patch-flags                ; string-list gexp
+                (default %default-patch-flags))
 
   ;; Patching requires Guile, GNU Patch, and a few more.  These two fields are
   ;; used to specify these dependencies when needed.
@@ -323,6 +323,9 @@ specifications to 'hash'."
                     (number->string (object-address origin) 16)))))
 
 (set-record-type-printer! <origin> print-origin)
+
+(define %default-patch-flags
+  #~("-p1"))
 
 (define (origin-actual-file-name origin)
   "Return the file name of ORIGIN, either its 'file-name' field or the file
@@ -592,7 +595,7 @@ the build code of derivation."
                            #:key
                            inputs
                            (snippet #f)
-                           (flags '("-p1"))
+                           (flags %default-patch-flags)
                            (modules '())
                            (guile-for-build (%guile-for-build))
                            (system (%current-system)))
@@ -1620,7 +1623,7 @@ unless you know what you are doing."
              (content-hash-value hash)
              name #:system system))
     (($ <origin> uri method hash name (= force (patches ...)) snippet
-        (flags ...) inputs (modules ...) guile-for-build)
+                 flags inputs (modules ...) guile-for-build)
      ;; Patches and/or a snippet.
      (mlet %store-monad ((source (method uri
                                          (content-hash-algorithm hash)
