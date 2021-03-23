@@ -5001,16 +5001,16 @@ once.")
 (define-public gnome-sudoku
   (package
     (name "gnome-sudoku")
-    (version "3.34.1")
+    (version "40.0")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "mirror://gnome/sources/" name "/"
-                           (version-major+minor version) "/"
+                           (version-major version) "/"
                            name "-" version ".tar.xz"))
        (sha256
         (base32
-         "025y85r4qqardivvwiwhbmgarziykdy224m8zlrq8b79zv82793b"))))
+         "0byz0f8lylf5cy8hvb3203vbd1k0ljjbm8nv549m125z9nn5j66r"))))
     (build-system meson-build-system)
     (arguments
      '(#:glib-or-gtk? #t
