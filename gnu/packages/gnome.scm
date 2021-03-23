@@ -2249,15 +2249,15 @@ and keep up to date translations of documentation.")
 (define-public gnome-disk-utility
   (package
     (name "gnome-disk-utility")
-    (version "3.34.0")
+    (version "40.0")
     (source (origin
               (method url-fetch)
               (uri (string-append "mirror://gnome/sources/" name "/"
-                                  (version-major+minor version) "/"
+                                  (version-major version) "/"
                                   name "-" version ".tar.xz"))
               (sha256
                (base32
-                "1mb7q90lnlp97dhxhnadhjagcfd12dfqzp0vj9h6b1r61pzhy97y"))))
+                "15s8xy3adxjw09ynz0kdffq12gkhcznfx7cxzyq6r7rw8ps7574z"))))
     (build-system meson-build-system)
     (arguments
      '(#:configure-flags '("-Dlogind=libelogind")
