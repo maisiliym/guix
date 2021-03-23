@@ -6787,21 +6787,22 @@ freedesktop.org help system specification.")
 (define-public yelp-tools
   (package
     (name "yelp-tools")
-    (version "3.32.2")
+    (version "40.0")
     (source
      (origin
        (method url-fetch)
        (uri
         (string-append "mirror://gnome/sources/" name "/"
-                       (version-major+minor version) "/"
+                       (version-major version) "/"
                        name "-" version ".tar.xz"))
        (sha256
-        (base32 "1yg8f5g5wadhmy4yfd9yjhvd8vll4gq4l86ibp0b42qbxnsmcf0q"))))
-    (build-system gnu-build-system)
+        (base32 "1bkanqp3qwmirv06mi99qv2acr5ba5rlhy9zlh0fyrfxygraqjv6"))))
+    (build-system meson-build-system)
     (native-inputs
      `(("pkg-config" ,pkg-config)))
     (inputs
-     `(("yelp-xsl" ,yelp-xsl)))
+     `(("yelp-xsl" ,yelp-xsl)
+       ("python-lxml" ,python-lxml)))
     (propagated-inputs
      ;; Needed by `yelp-build', `yelp-check' or 'yelp.m4'.
      `(("itstool" ,itstool)
