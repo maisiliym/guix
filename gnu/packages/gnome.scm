@@ -8731,15 +8731,15 @@ shared object databases, search tools and indexing.")
 (define-public nautilus
   (package
     (name "nautilus")
-    (version "3.34.2")
+    (version "40.0")
     (source (origin
               (method url-fetch)
               (uri (string-append "mirror://gnome/sources/" name "/"
-                                  (version-major+minor version) "/"
+                                  (version-major version) "/"
                                   name "-" version ".tar.xz"))
               (sha256
                (base32
-                "19zqwq4qyyncc5wq3xls0f7rsavnw741k336p2h7kx35p4kf41mv"))))
+                "0h2drh4zfjhhys6zm27h75kk4hr3lc1f7a7pa8p3gbcmg1hh4l3x"))))
     (build-system meson-build-system)
     (arguments
      '(#:glib-or-gtk? #t
