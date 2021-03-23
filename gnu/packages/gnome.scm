@@ -2135,16 +2135,16 @@ offline sources, providing a centralized place for managing your contacts.")
 (define-public gnome-desktop
   (package
     (name "gnome-desktop")
-    (version "3.34.2")
+    (version "40.0")
     (source
      (origin
       (method url-fetch)
       (uri (string-append "mirror://gnome/sources/" name "/"
-                          (version-major+minor version)  "/"
+                          (version-major version)  "/"
                           name "-" version ".tar.xz"))
       (sha256
        (base32
-        "1v983xirwp1y6ggz97bh742ak6gff0hxb359dgn37nikjxhvm0a0"))))
+        "017fm5flg955qiqyz6zw2fzv4wywc4b32faqnn980khyhczzvar0"))))
     (build-system meson-build-system)
     (arguments
      '(#:phases
