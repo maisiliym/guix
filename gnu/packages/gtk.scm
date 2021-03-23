@@ -1845,7 +1845,7 @@ can also be used to document application code.")
 (define-public gtk-engines
   (package
     (name "gtk-engines")
-    (version "2.20.2")
+    (version "2.90.3.1")
     (source (origin
               (method url-fetch)
               (uri (string-append "mirror://gnome/sources/" name "/"
@@ -1853,7 +1853,7 @@ can also be used to document application code.")
                                   name "-" version ".tar.bz2"))
               (sha256
                (base32
-                "1db65pb0j0mijmswrvpgkdabilqd23x22d95hp5kwxvcramq1dhm"))))
+                "1w7ai0kwhc9i3axjzvy4fkknwf9mc6cx3888snmvkx9127qfyqwc"))))
     (build-system gnu-build-system)
     (arguments
      `(#:configure-flags
