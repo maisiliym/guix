@@ -6,7 +6,7 @@ diff -ru gobject-introspection-1.58.1.orig/giscanner/__init__.py gobject-introsp
 @@ -22,6 +22,8 @@
  builddir = os.environ.get('UNINSTALLED_INTROSPECTION_BUILDDIR')
  if builddir is not None:
-     __path__.append(os.path.join(builddir, 'giscanner'))
+     __path__.append(os.path.join(builddir, 'giscanner'))  # type: ignore  # mypy issue #1422
 +if not 'CC' in os.environ:
 +    os.environ['CC'] = 'gcc'
  try:

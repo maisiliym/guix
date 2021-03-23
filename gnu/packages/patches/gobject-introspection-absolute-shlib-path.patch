@@ -129,10 +129,10 @@
 
 --- a/giscanner/utils.py
 +++ b/giscanner/utils.py
-@@ -111,17 +111,11 @@ def extract_libtool_shlib(la_file):
+@@ -113,16 +113,11 @@ def extract_libtool_shlib(la_file):
      if dlname is None:
          return None
- 
+
 -    # Darwin uses absolute paths where possible; since the libtool files never
 -    # contain absolute paths, use the libdir field
 -    if platform.system() == 'Darwin':
@@ -141,17 +141,16 @@
 -        if libdir is None:
 -            return dlbasename
 -        return libdir + '/' + dlbasename
--    # From the comments in extract_libtool(), older libtools had
--    # a path rather than the raw dlname
+-    # Older libtools had a path rather than the raw dlname
 -    return os.path.basename(dlname)
 +    dlbasename = os.path.basename(dlname)
 +    libdir = _extract_libdir_field(la_file)
 +    if libdir is None:
 +        return dlbasename
 +    return libdir + '/' + dlbasename
- 
- 
- def extract_libtool(la_file):
+
+
+ # Returns arguments for invoking libtool, if applicable, otherwise None
 --- a/tests/scanner/test_shlibs.py
 +++ b/tests/scanner/test_shlibs.py
 @@ -40,6 +64,7 @@ class TestLddParser(unittest.TestCase):
