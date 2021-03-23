@@ -9754,16 +9754,16 @@ handling the startup notification side.")
 (define-public gnome-calculator
   (package
     (name "gnome-calculator")
-    (version "3.34.1")
+    (version "40.0")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "mirror://gnome/sources/" name "/"
-                           (version-major+minor version) "/"
+                           (version-major version) "/"
                            name "-" version ".tar.xz"))
        (sha256
         (base32
-         "0lbh87255zzggqzai6543qg920y52bl4vs5m5h5087ghzg14hlsd"))))
+         "1qsddhr1himkgghq40g81g5ny4wjc723vfyqfa8fnw0ips45k8pk"))))
     (build-system meson-build-system)
     (arguments '(#:glib-or-gtk? #t))
     (native-inputs
