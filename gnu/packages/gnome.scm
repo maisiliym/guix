@@ -7986,7 +7986,7 @@ libxml2.")
 (define-public gdm
   (package
     (name "gdm")
-    (version "3.34.1")
+    (version "3.38.2.1")
     (source (origin
               (method url-fetch)
               (uri (string-append "mirror://gnome/sources/" name "/"
@@ -7994,7 +7994,7 @@ libxml2.")
                                   name "-" version ".tar.xz"))
               (sha256
                (base32
-                "1lyqvcwxhwxklbxn4xjswjzr6fhjix6h28mi9ypn34wdm9bzcpg8"))
+                "1nn4iri48r04fv87kvhsybgyasp1k2w1c5x1asmvvz7bsl2s4n6a"))
               (patches (search-patches "gdm-default-session.patch"))))
     (build-system glib-or-gtk-build-system)
     (arguments
