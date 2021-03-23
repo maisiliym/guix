@@ -1393,7 +1393,7 @@ toolkit.")
 (define-public gtkmm
   (package
     (name "gtkmm")
-    (version "3.24.2")
+    (version "4.0.1")
     (source (origin
              (method url-fetch)
              (uri (string-append "mirror://gnome/sources/" name "/"
@@ -1401,7 +1401,7 @@ toolkit.")
                                  name "-" version ".tar.xz"))
              (sha256
               (base32
-               "1hxdnhavjyvbcpxhd5z17l9fj4182028s66lc0s16qqqrldhjwbd"))))
+               "111qq3p34c8fgx4abx2axcpzxbsb7bpg618y0nr2rq28g2ydjww9"))))
     (build-system gnu-build-system)
     (native-inputs `(("pkg-config" ,pkg-config)
                      ("glib" ,glib "bin")        ;for 'glib-compile-resources'
