@@ -3073,7 +3073,7 @@ some form of information without getting in the user's way.")
 (define-public libpeas
   (package
     (name "libpeas")
-    (version "1.28.0")
+    (version "1.30.0")
     (source
      (origin
       (method url-fetch)
@@ -3082,7 +3082,7 @@ some form of information without getting in the user's way.")
                           name "-" version ".tar.xz"))
       (sha256
        (base32
-        "05cb7drn6arc4gi02wgsvzibigi2riz5gnfnmlb0zmbfnj9ikna2"))))
+        "18xrk1c1ixlhkmykcfiafrl2am470ws687xqvjlq40zwkcp5dx8b"))))
     (build-system meson-build-system)
     (arguments
      '(#:phases
