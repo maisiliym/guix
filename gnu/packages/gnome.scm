@@ -11778,7 +11778,7 @@ libraries.  Applications do not need to be recompiled--or even restarted.")
 (define-public gnome-builder
   (package
     (name "gnome-builder")
-    (version "3.36.1")
+    (version "3.40.0")
     (source (origin
               (method url-fetch)
               (uri (string-append "mirror://gnome/sources/" name "/"
@@ -11786,7 +11786,7 @@ libraries.  Applications do not need to be recompiled--or even restarted.")
                                   name "-" version ".tar.xz"))
               (sha256
                (base32
-                "17pvmd5jypar8dkr6w56hvf7jnq4l1wih2wwgkrv7sblr7rkkar2"))))
+                "0yg2kclfalva66lkrsjiczy8hd5za6bhrcpyirlbqwrbc8pc8548"))))
     (build-system meson-build-system)
     (arguments
      `(#:configure-flags (list "-Dnetwork_tests=false"
