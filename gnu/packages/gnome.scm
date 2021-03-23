@@ -7401,7 +7401,7 @@ Exchange, Last.fm, IMAP/SMTP, Jabber, SIP and Kerberos.")
 (define-public evolution-data-server
   (package
     (name "evolution-data-server")
-    (version "3.34.2")
+    (version "3.40.0")
     (source (origin
               (method url-fetch)
               (uri (string-append "mirror://gnome/sources/" name "/"
@@ -7413,7 +7413,7 @@ Exchange, Last.fm, IMAP/SMTP, Jabber, SIP and Kerberos.")
                                        "evolution-data-server-CVE-2020-16117.patch"))
               (sha256
                (base32
-                "16z85y6hhazcrp5ngw47w4x9r0j8zrj7awv5im58hhp0xs19zf1y"))))
+                "0iblv19vn35nai57y6ls5lg6hlp6pv6ahj9ljh4mhdm2nq62ymzd"))))
     (build-system cmake-build-system)
     (arguments
      '(#:configure-flags
