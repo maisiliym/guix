@@ -1854,7 +1854,7 @@ and system administrators.")
 (define-public gnome-getting-started-docs
   (package
    (name "gnome-getting-started-docs")
-   (version "3.32.2")
+   (version "3.38.1")
    (source
     (origin
       (method url-fetch)
@@ -1862,7 +1862,7 @@ and system administrators.")
                           (version-major+minor version)
                           "/gnome-getting-started-docs-" version ".tar.xz"))
       (sha256
-       (base32 "1v4k465mlzrhgcdddzs6bmm0yliyrfx6jg3gh0s17a08i0w5rbwq"))))
+       (base32 "0nf8jgwimn5p0pvn81104c5qglwl2r37lc2fk99jgr1w5hzy5yqh"))))
    (build-system gnu-build-system)
    (native-inputs
     `(("gettext" ,gettext-minimal)
