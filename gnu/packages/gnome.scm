@@ -11663,7 +11663,7 @@ audio files.")
 (define-public jsonrpc-glib
   (package
     (name "jsonrpc-glib")
-    (version "3.34.0")
+    (version "3.38.0")
     (source (origin
               (method url-fetch)
               (uri (string-append "mirror://gnome/sources/" name "/"
@@ -11671,7 +11671,7 @@ audio files.")
                                    name "-" version ".tar.xz"))
               (sha256
                (base32
-                "0j05x4xv2cp3cbmp30m68z8g4rdw7b030ip4wszyfj9ya15v5kni"))))
+                "10laga98qf1jcsijgns4yr5anj1iw7ni36pwm07vflhim4a1jpyw"))))
     (build-system meson-build-system)
     (inputs
      `(("json-glib" ,json-glib)
