@@ -1927,7 +1927,7 @@ formats like PNG, SVG, PDF and EPS.")
 (define-public libgdata
   (package
     (name "libgdata")
-    (version "0.17.9")
+    (version "0.18.1")
     (source (origin
               (method url-fetch)
               (uri (string-append "mirror://gnome/sources/" name "/"
@@ -1935,7 +1935,7 @@ formats like PNG, SVG, PDF and EPS.")
                                   name "-" version ".tar.xz"))
               (sha256
                (base32
-                "0fj54yqxdapdppisqm1xcyrpgcichdmipq0a0spzz6009ikzgi45"))))
+                "1iq4d1qy0vkmy29xvr13dgz4pxvn5v3yi2swryld0ajinvp951fx"))))
     (build-system gnu-build-system)
     (arguments
      '(#:phases
