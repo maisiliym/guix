@@ -8827,7 +8827,7 @@ is complete it provides a graphical representation of each selected folder.")
 (define-public gnome-backgrounds
   (package
     (name "gnome-backgrounds")
-    (version "3.34.0")
+    (version "3.38.0")
     (source
      (origin
        (method url-fetch)
@@ -8836,7 +8836,7 @@ is complete it provides a graphical representation of each selected folder.")
                            name "-" version ".tar.xz"))
        (sha256
         (base32
-         "0zxlwy55fz7i582hch2wnj8zy1kzikssgaix0l2y41ccp5nzpdy2"))))
+         "1qqygm15rcdgm36vz2iy7b9axndjzvpi29lmygyakjc07a3jlwgp"))))
     (build-system meson-build-system)
     (native-inputs
      `(("intltool" ,intltool)))
