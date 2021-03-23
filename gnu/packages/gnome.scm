@@ -8991,15 +8991,15 @@ associations for GNOME.")
 (define-public gnome-weather
   (package
    (name "gnome-weather")
-   (version "3.34.0")
+   (version "40.0")
    (source (origin
             (method url-fetch)
             (uri (string-append "mirror://gnome/sources/" name "/"
-                                (version-major+minor version) "/"
+                                (version-major version) "/"
                                 name "-" version ".tar.xz"))
             (sha256
              (base32
-              "1g63xzs17i36if923b36k9fwbk0nqa5vz6zh1k6q2axrzhhpx1i4"))))
+              "1vxfcvga5waangq3rzwdrdxyy5sw40vv0l463lc651s0n8xafd9a"))))
    (build-system meson-build-system)
    (native-inputs
     `(("gettext" ,gettext-minimal)
