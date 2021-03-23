@@ -11143,7 +11143,7 @@ environment.")
 (define-public polari
   (package
     (name "polari")
-    (version "3.36.3")
+    (version "3.38.0")
     (source (origin
               (method url-fetch)
               (uri (string-append "mirror://gnome/sources/polari/"
@@ -11151,7 +11151,7 @@ environment.")
                                   "/polari-" version ".tar.xz"))
               (sha256
                (base32
-                "0fpmrvhd40yay051bzn4x3gsrzdv42nav0pm5ps0np8wk1z689jg"))))
+                "1l82nmb5qk4h69rsdhzlcmjjdhwh9jzfs4cnw8hy39sg5v9ady1s"))))
     (build-system meson-build-system)
     (arguments
      `(#:glib-or-gtk? #t
