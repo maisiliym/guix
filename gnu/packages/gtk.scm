@@ -1370,7 +1370,7 @@ library.")
 (define-public atkmm
   (package
     (name "atkmm")
-    (version "2.28.0")
+    (version "2.36.0")
     (source (origin
              (method url-fetch)
              (uri (string-append "mirror://gnome/sources/" name "/"
@@ -1378,7 +1378,7 @@ library.")
                                  name "-" version ".tar.xz"))
              (sha256
               (base32
-               "0fnxrspxkhhbrjphqrpvl3zjm66n50s4cywrrrwkhbflgy8zqk2c"))))
+               "0wwr0663jrqx2klsasffd9wpk3kqnwisj1y3ahdkjdk5hzrsjgy9"))))
     (build-system gnu-build-system)
     (native-inputs `(("pkg-config" ,pkg-config)))
     (propagated-inputs
