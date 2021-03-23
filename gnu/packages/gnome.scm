@@ -1016,7 +1016,7 @@ between different kinds of computer systems.")
 (define-public tepl
   (package
     (name "tepl")
-    (version "4.4.0")
+    (version "5.0.1")
     (source
      (origin
        (method url-fetch)
@@ -1026,7 +1026,7 @@ between different kinds of computer systems.")
                        name "-" version ".tar.xz"))
        (sha256
         (base32
-         "0mm2z849hnni7597an05mrv0dckrxjngpf2xfa0g5s17i8x6gxp6"))))
+         "0118j64s4fb350phbgda2rk6sv19rfgglxc7nf248llzc1klj9xi"))))
     (build-system glib-or-gtk-build-system)
     (arguments
      `(#:tests? #f))                    ; FIX-ME: Requires gvfs
