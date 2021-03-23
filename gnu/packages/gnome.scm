@@ -10409,7 +10409,7 @@ and uncluttered interface for the management of password databases.")
 (define-public sound-juicer
   (package
     (name "sound-juicer")
-    (version "3.24.0")
+    (version "3.38.0")
     (source
      (origin
        (method url-fetch)
@@ -10418,7 +10418,7 @@ and uncluttered interface for the management of password databases.")
                            name "-" version ".tar.xz"))
        (sha256
         (base32
-         "19qg4xv0f9rkq34lragkmhii1llxsa87llbl28i759b0ks4f6sny"))))
+         "08d5d81rz9sj3m5paw8fwbgxmhlbr7bcjdzpmzj832qvg8smydxf"))))
     (build-system glib-or-gtk-build-system)
     (native-inputs
      `(("desktop-file-utils" ,desktop-file-utils)
