@@ -8355,17 +8355,16 @@ properties, screen resolution, and other GNOME parameters.")
 (define-public gnome-shell
   (package
     (name "gnome-shell")
-    (version "3.34.5")
+    (version "40.0")
     (source (origin
               (method url-fetch)
               (uri (string-append "mirror://gnome/sources/" name "/"
-                                  (version-major+minor version) "/"
+                                  (version-major version) "/"
                                   name "-" version ".tar.xz"))
               (sha256
                (base32
-                "0l3mdn7g2c22mdhrqkxvvc1pk2w0v32f2v4a6n1phvaalwcg75nj"))
-              (patches (search-patches "gnome-shell-CVE-2020-17489.patch"
-                                       "gnome-shell-theme.patch"
+                "0y44yvxxg4lkcqs2r6ngwsbdhhr3l94byrdzd7icbags5m01zrxw"))
+              (patches (search-patches "gnome-shell-theme.patch"
                                        "gnome-shell-disable-test.patch"))
               (modules '((guix build utils)))
               (snippet
