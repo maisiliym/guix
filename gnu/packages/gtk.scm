@@ -743,7 +743,7 @@ is part of the GNOME accessibility project.")
 (define-public at-spi2-atk
   (package
    (name "at-spi2-atk")
-   (version "2.34.1")
+   (version "2.38.0")
    (source (origin
             (method url-fetch)
             (uri (string-append "mirror://gnome/sources/" name "/"
@@ -751,7 +751,7 @@ is part of the GNOME accessibility project.")
                                 name "-" version ".tar.xz"))
             (sha256
              (base32
-              "05ncp7s5nddjinffs26mcvpbd63vk1m3cv5y530p3plgfhqgjvbp"))))
+              "0ks6r9sx27l80n3a7yjmkilxv48cqj183wc7cap3caw2myjhi86g"))))
    (build-system meson-build-system)
    (arguments
     '(#:phases
