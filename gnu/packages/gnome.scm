@@ -1828,15 +1828,15 @@ and running smart commands.")
 (define-public gnome-user-docs
   (package
    (name "gnome-user-docs")
-   (version "3.32.3")
+   (version "40.0")
    (source
     (origin
       (method url-fetch)
       (uri (string-append "mirror://gnome/sources/gnome-user-docs/"
-                          (version-major+minor version)
+                          (version-major version)
                           "/gnome-user-docs-" version ".tar.xz"))
       (sha256
-       (base32 "0dvsl0ldg8rf7yq0r4dv1pn41s7gjgcqp7agkbflkbmhrl6vbhig"))))
+       (base32 "149s4qvqyx1jgqqzsrpmlavi6p8kgh8hbqbpncl5i8ld446lhx1i"))))
    (build-system gnu-build-system)
    (native-inputs
     `(("gettext" ,gettext-minimal)
