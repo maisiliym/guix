@@ -12006,7 +12006,7 @@ your data.")
 (define-public gtranslator
   (package
     (name "gtranslator")
-    (version "3.36.0")
+    (version "3.38.0")
         (source (origin
               (method url-fetch)
               (uri (string-append "mirror://gnome/sources/" name "/"
@@ -12014,7 +12014,7 @@ your data.")
                                   name "-" version ".tar.xz"))
               (sha256
                (base32
-                "1lxd2nkji4jk8g2xmyc1a1r3ww710ddk91zh9psmx8xlb4xivaid"))))
+                "0dbn5p533f0bb084rsfib5bv0slg8ifgv6cfw4xj7n923awakkfv"))))
     (build-system meson-build-system)
     (inputs
      `(("json-glib" ,json-glib)
