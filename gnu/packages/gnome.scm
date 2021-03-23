@@ -1435,15 +1435,15 @@ extraction, and lookup for applications on the desktop.")
 (define-public gnome-initial-setup
   (package
    (name "gnome-initial-setup")
-   (version "3.32.1")
+   (version "40.0")
    (source (origin
             (method url-fetch)
            (uri (string-append "mirror://gnome/sources/gnome-initial-setup/"
-                                (version-major+minor version)
+                                (version-major version)
                                 "/gnome-initial-setup-" version ".tar.xz"))
             (sha256
              (base32
-              "1gwhp7dalyc8zsb2pa66cmpdrj2d6drbq5p331sq6zp8ds10k9ry"))))
+              "0vw9k4drslbxr9q0160v88zny3xx0rkfqks1lw9f23iq2i3cgq0l"))))
    (build-system meson-build-system)
    (arguments
     '(#:configure-flags '(;; Enable camera support for user selfie.
