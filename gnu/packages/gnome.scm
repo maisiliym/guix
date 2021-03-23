@@ -9472,15 +9472,15 @@ fit the GNOME desktop.")
 (define-public gnome-dictionary
   (package
     (name "gnome-dictionary")
-    (version "3.26.1")
+    (version "40.0")
     (source (origin
               (method url-fetch)
               (uri (string-append "mirror://gnome/sources/" name "/"
-                                  (version-major+minor version) "/"
+                                  (version-major version) "/"
                                   name "-" version ".tar.xz"))
               (sha256
                (base32
-                "007k2bq8iplg4psdpz074r5d4zxvn4s95qym4rw9hs6giljbrf0n"))))
+                "1d8dhcfys788vv27v34i3s3x3jdvdi2kqn2a5p8c937a9hm0qr9f"))))
     (build-system meson-build-system)
     (arguments '(#:glib-or-gtk? #t
                  #:phases (modify-phases %standard-phases
