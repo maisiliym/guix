@@ -929,17 +929,17 @@ cloud integration is offered through GNOME Online Accounts.")
 (define-public gnome-music
   (package
     (name "gnome-music")
-    (version "3.34.5")
+    (version "40.0")
     (source
      (origin
        (method url-fetch)
        (uri
         (string-append "mirror://gnome/sources/" name "/"
-                       (version-major+minor version) "/"
+                       (version-major version) "/"
                        name "-" version ".tar.xz"))
        (sha256
         (base32
-         "1r5sfw5cbd6qqh27lzhblazir0bfi3k7nqppw66qw990isqm5psy"))))
+         "1djqhd4jccvk352hwxjhiwjgbnv1qnpv450f2c6w6581vcn9pq38"))))
     (build-system meson-build-system)
     (arguments
      `(#:glib-or-gtk? #t
