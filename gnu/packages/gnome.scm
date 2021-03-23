@@ -859,7 +859,7 @@ tomorrow, the rest of the week and for special occasions.")
 (define-public gnome-photos
   (package
     (name "gnome-photos")
-    (version "3.34.2")
+    (version "3.38.1")
     (source
      (origin
        (method url-fetch)
@@ -869,7 +869,7 @@ tomorrow, the rest of the week and for special occasions.")
                        name "-" version ".tar.xz"))
        (sha256
         (base32
-         "06ml5sf8xhpan410msqz085hmfc7082d368pb82yq646y9pcfn9w"))))
+         "03c77vlwjm4xni2s4ppx5jlil1ckwjd5jv11lxcdakdpcgw09ha3"))))
     (build-system meson-build-system)
     (arguments
      `(#:glib-or-gtk? #t
