@@ -2343,7 +2343,7 @@ the font would look under various sizes.")
 (define-public gcr
   (package
     (name "gcr")
-    (version "3.34.0")
+    (version "3.38.1")
     (source (origin
               (method url-fetch)
               (uri (string-append "mirror://gnome/sources/" name "/"
@@ -2351,7 +2351,7 @@ the font would look under various sizes.")
                                   name "-" version ".tar.xz"))
               (sha256
                (base32
-                "0925snsixzkwh49xiayqmj6fcrmklqk8kyy0jkv7m64h9abm1pr9"))))
+                "1jcyin316qx6ds4db1s611237h82n4xn90ibqyqmz9lk9afazz0p"))))
     (build-system gnu-build-system)
     (arguments
      '(#:phases
