@@ -1626,15 +1626,15 @@ destroying an ancient book using a special wand.")
 (define-public gnome-chess
   (package
     (name "gnome-chess")
-    (version "3.37.3")
+    (version "40.0")
     (source (origin
               (method url-fetch)
               (uri (string-append "mirror://gnome/sources/gnome-chess/"
-                                  (version-major+minor version)  "/"
+                                  (version-major version)  "/"
                                   "gnome-chess-" version ".tar.xz"))
               (sha256
                (base32
-                "09axf0q1mp13sv8cs0syfg8ahcd9r2qb26278r09j6s4njxmkfv4"))))
+                "0c4nfyi3frl94vjsfp3r07k7g7ffwf8dg5qyq1580mxmks0gigr5"))))
     (build-system meson-build-system)
     (arguments
      '(#:glib-or-gtk? #t
