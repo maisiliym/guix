@@ -1540,7 +1540,7 @@ sharing to the masses.")
 (define-public sushi
   (package
     (name "sushi")
-    (version "3.32.1")
+    (version "3.38.0")
     (source (origin
               (method url-fetch)
               (uri (string-append "mirror://gnome/sources/" name "/"
@@ -1548,7 +1548,7 @@ sharing to the masses.")
                                   name "-" version ".tar.xz"))
               (sha256
                (base32
-                "02idvqjk76lii9xyg3b1yz4rw721709bdm5j8ikjym6amcghl0aj"))))
+                "0vlqqk916dymv4asbyvalp1m096a5hh99nx23i4xavzvgygh4h2h"))))
     (build-system meson-build-system)
     (arguments
      `(#:glib-or-gtk? #t
