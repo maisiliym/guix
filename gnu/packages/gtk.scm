@@ -307,7 +307,7 @@ applications.")
 (define-public pango
   (package
    (name "pango")
-   (version "1.44.7")
+   (version "1.48.3")
    (source (origin
             (method url-fetch)
             (uri (string-append "mirror://gnome/sources/pango/"
@@ -316,7 +316,7 @@ applications.")
             (patches (search-patches "pango-skip-libthai-test.patch"))
             (sha256
              (base32
-              "07qvxa2sk90chp1l12han6vxvy098mc37sdqcznyywyv2g6bd9b6"))))
+              "0ijbkcs6217ygzphlpi0vajxkccifdbsl0jdjpy8wz11h9f19sin"))))
    (build-system meson-build-system)
    (arguments
     '(#:phases (modify-phases %standard-phases
@@ -327,8 +327,11 @@ applications.")
                        ;; adding it here would introduce a circular dependency.
                        (("\\[ 'test-harfbuzz'.*") "")
                        (("\\[ 'test-itemize'.*") "")
-                       (("\\[ 'test-layout'.*") ""))
-                     #t)))))
+                       (("\\[ 'test-layout'.*") "")
+                       (("\\[ 'test-font'.*") ""))
+                     #t))
+                 (add-before 'check 'set-HOME
+                   (lambda _ (setenv "HOME" (getcwd)))))))
    (propagated-inputs
     ;; These are all in Requires or Requires.private of the '.pc' files.
     `(("cairo" ,cairo)
