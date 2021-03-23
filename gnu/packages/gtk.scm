@@ -2234,7 +2234,7 @@ popovers.")
 (define-public goocanvas
   (package
     (name "goocanvas")
-    (version "2.0.4")
+    (version "3.0.0")
     (source
      (origin
        (method url-fetch)
@@ -2242,7 +2242,7 @@ popovers.")
                            (version-major+minor version)
                            "/goocanvas-" version ".tar.xz"))
        (sha256
-        (base32 "141fm7mbqib0011zmkv3g8vxcjwa7hypmq71ahdyhnj2sjvy4a67"))))
+        (base32 "06j05g2lmwvklmv51xsb7gm7rszcarhm01sal41jfp0qzrbpa2k7"))))
     (build-system gnu-build-system)
     (native-inputs
      `(("gettext" ,gettext-minimal)
