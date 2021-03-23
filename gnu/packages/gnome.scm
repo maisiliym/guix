@@ -6583,15 +6583,15 @@ a secret password store, an adblocker, and a modern UI.")
 (define-public epiphany
   (package
     (name "epiphany")
-    (version "3.34.4")
+    (version "40.0")
     (source (origin
               (method url-fetch)
               (uri (string-append "mirror://gnome/sources/epiphany/"
-                                  (version-major+minor version) "/"
+                                  (version-major version) "/"
                                   "epiphany-" version ".tar.xz"))
               (sha256
                (base32
-                "13ar3s40cds1rplwbzx0fzigf120w0rydiv05r3k6zpc0zy91qb0"))))
+                "0i58mfmdkzgamb08p6sp6q9imrqn25a3gcw6fq9v06xdcq7iry6m"))))
 
     (build-system meson-build-system)
     (arguments
