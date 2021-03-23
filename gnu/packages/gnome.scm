@@ -6718,16 +6718,16 @@ of running programs and invoke methods on those interfaces.")
 (define-public yelp-xsl
   (package
     (name "yelp-xsl")
-    (version "3.34.2")
+    (version "40.0")
     (source
      (origin
        (method url-fetch)
        (uri
         (string-append "mirror://gnome/sources/" name "/"
-                       (version-major+minor version) "/"
+                       (version-major version) "/"
                        name "-" version ".tar.xz"))
        (sha256
-        (base32 "1bdpgkzawhqmw52l6zx8czzg1ndfgcf1p44m2bxjdpqkc4afcgqc"))))
+        (base32 "1c32rz8216049s22s0ivkqp9v41ybh7gd1x612xv7kgw6d6ws7in"))))
     (build-system gnu-build-system)
     (native-inputs
      `(("gettext-minimal" ,gettext-minimal)
