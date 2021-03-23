@@ -2009,16 +2009,16 @@ to other formats.")
 (define-public gnome-characters
   (package
     (name "gnome-characters")
-    (version "3.30.0")
+    (version "40.0")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "mirror://gnome/sources/"
-                           "gnome-characters/" (version-major+minor version)
+                           "gnome-characters/" (version-major version)
                            "/gnome-characters-" version ".tar.xz"))
        (sha256
         (base32
-         "08cwz39iwgsyyb2wqhb8vfbmh1cwfkgfiy7adp08w7rwqi99x3dp"))))
+         "0z2xa4w921bzpzj6gv88pvbrijcnnwni6jxynwz0ybaravyzaqha"))))
     (build-system meson-build-system)
     (arguments
      `(#:glib-or-gtk? #t
