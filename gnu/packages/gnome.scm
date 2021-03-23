@@ -1644,7 +1644,7 @@ client devices can handle.")
 (define-public libnma
   (package
     (name "libnma")
-    (version "1.8.28")
+    (version "1.8.30")
     (source (origin
               (method url-fetch)
               (uri (string-append "mirror://gnome/sources/" name "/"
@@ -1652,7 +1652,7 @@ client devices can handle.")
                                   name "-" version ".tar.xz"))
               (sha256
                (base32
-                "09mp6k0hfam1vyyv9kcd8j4gb2r58i05ipx2nswb58ris599bxja"))))
+                "1d5gzn7ss5vi0bhc8s4i5gsrck1ajslajam5jxfqazg094mffcys"))))
     (build-system meson-build-system)
     (arguments
      `(#:phases
