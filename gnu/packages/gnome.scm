@@ -11727,7 +11727,7 @@ GObject introspection bindings.")
 (define-public sysprof
   (package
     (name "sysprof")
-    (version "3.36.0")
+    (version "3.40.0")
     (source
      (origin
        (method url-fetch)
@@ -11735,7 +11735,7 @@ GObject introspection bindings.")
                            (version-major+minor version) "/"
                            "sysprof-" version ".tar.xz"))
        (sha256
-        (base32 "024i0gzqnm79rpr4gqxdvcj6gvf82xdlcp2p1k9ikcppmi6xnw46"))))
+        (base32 "1s7nwkrnvq6sxz6k2744rd9vircvgx2hj2y26nr72a2bilwh7b4n"))))
     (build-system meson-build-system)
     (arguments
      `(#:configure-flags
