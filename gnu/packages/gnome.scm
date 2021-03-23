@@ -9327,15 +9327,15 @@ Microsoft SkyDrive and Hotmail, using their REST protocols.")
 (define-public gnome-clocks
   (package
     (name "gnome-clocks")
-    (version "3.34.0")
+    (version "40.0")
     (source (origin
               (method url-fetch)
               (uri (string-append "mirror://gnome/sources/" name "/"
-                                  (version-major+minor version) "/"
+                                  (version-major version) "/"
                                   name "-" version ".tar.xz"))
               (sha256
                (base32
-                "0g7hjk55smhkd09hwa9kag3h5a12l494wj89w9smpdk3ghsmy6b1"))))
+                "02d3jg46sn8d9gd4dsaly22gg5vkbz2gpq4pmwpvncb4rsqk7sn2"))))
     (build-system meson-build-system)
     (arguments
      '(#:glib-or-gtk? #t
