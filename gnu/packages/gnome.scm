@@ -6234,15 +6234,15 @@ supports playlists, song ratings, and any codecs installed through gstreamer.")
 (define-public eog
  (package
    (name "eog")
-   (version "3.34.1")
+   (version "40.0")
    (source (origin
             (method url-fetch)
             (uri (string-append "mirror://gnome/sources/" name "/"
-                                (version-major+minor version) "/"
+                                (version-major version) "/"
                                 name "-" version ".tar.xz"))
             (sha256
              (base32
-              "0b7ld4azs9xbdjsk9b91ywhdzvxgajhndiwiivxjzbr0hjgp7c7x"))))
+              "1yg57l1fyhpmyk04w6whysnrdv40kz82g7agphi7r5qmy62cj5rh"))))
    (build-system meson-build-system)
    (arguments
     `(#:configure-flags
