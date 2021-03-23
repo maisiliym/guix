@@ -7051,7 +7051,7 @@ configuration program to choose applications starting on login.")
 (define-public gjs
   (package
     (name "gjs")
-    (version "1.58.3")
+    (version "1.68.0")
     (source (origin
               (method url-fetch)
               (uri (string-append "mirror://gnome/sources/" name "/"
@@ -7059,7 +7059,7 @@ configuration program to choose applications starting on login.")
                                   name "-" version ".tar.xz"))
               (sha256
                (base32
-                "1bkksx362007zs8c31ydygb29spwa5g5kch1ad2grc2sp53wv7ya"))))
+                "1vqsmzy2wmyhmq37y2c6jl0wq4xnicf0z7k6jaxn3aw11sh783ph"))))
     (build-system gnu-build-system)
     (arguments
      '(#:phases
