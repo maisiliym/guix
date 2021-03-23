@@ -9372,15 +9372,15 @@ desktop.  It supports world clock, stop watch, alarms, and count down timer.")
 (define-public gnome-calendar
   (package
     (name "gnome-calendar")
-    (version "3.34.2")
+    (version "40.0")
     (source (origin
               (method url-fetch)
               (uri (string-append "mirror://gnome/sources/" name "/"
-                                  (version-major+minor version) "/"
+                                  (version-major version) "/"
                                   name "-" version ".tar.xz"))
               (sha256
                (base32
-                "1bnmd191044zn2kr6f5vg7sm5q59qf7z652awll1f7s6ahijr8rw"))))
+                "0d74hng9jdmwdcjgj4xfrcink2gwkbp1k1mad4wanaf7q31c6f38"))))
     (build-system meson-build-system)
     (arguments
      '(#:glib-or-gtk? #t
