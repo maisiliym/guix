@@ -9926,16 +9926,16 @@ Bluefish supports many programming and markup languages.")
 (define-public gnome-system-monitor
   (package
     (name "gnome-system-monitor")
-    (version "3.32.1")
+    (version "40.0")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "mirror://gnome/sources/" name "/"
-                           (version-major+minor version) "/"
+                           (version-major version) "/"
                            name "-" version ".tar.xz"))
        (sha256
         (base32
-         "1wd43qdgjav6xamq5z5cy8fri5zr01jga3plc9w95gcia0rk3ha8"))))
+         "0mp778rcmh0l9rh8wlz4d0b5sw5fpap0lqp1g6db0ljmypvm1rb4"))))
     (build-system meson-build-system)
     (arguments
      '(#:glib-or-gtk? #t
