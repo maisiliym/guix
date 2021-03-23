@@ -8239,15 +8239,15 @@ devices using the GNOME desktop.")
 (define-public gnome-control-center
   (package
     (name "gnome-control-center")
-    (version "3.34.2")
+    (version "40.0")
     (source (origin
               (method url-fetch)
               (uri (string-append "mirror://gnome/sources/" name "/"
-                                  (version-major+minor version) "/"
+                                  (version-major version) "/"
                                   name "-" version ".tar.xz"))
               (sha256
                (base32
-                "054igagvmyzpaa5nwzz98gv7bk7l5dwp6g813707132si3szlpx8"))))
+                "1w82ndf6ahfghicss0vmkf3xsi424mn90nasmq4m2f0pcmrsbjfc"))))
     (build-system meson-build-system)
     (arguments
      '(#:glib-or-gtk? #t
