@@ -1754,7 +1754,7 @@ information.")
 (define-public gtk-doc
   (package
     (name "gtk-doc")
-    (version "1.28")
+    (version "1.32")
     (source (origin
               (method url-fetch)
               (uri (string-append "mirror://gnome/sources/" name "/"
@@ -1762,7 +1762,7 @@ information.")
                                   name "-" version ".tar.xz"))
               (sha256
                (base32
-                "05apmwibkmn1icx05l8aw241lhymcx01zvk5i499cb150bijj7li"))))
+                "0z4h1dggpimygdp719l457jvqilps4qcfpk31jmj3jqpzcsg03ny"))))
     (build-system gnu-build-system)
     (arguments
      `(#:parallel-tests? #f
