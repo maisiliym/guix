@@ -569,8 +569,7 @@ highlighting and other features typical of a source code editor.")
 (define-public gdk-pixbuf
   (package
    (name "gdk-pixbuf")
-   (version "2.42.2")
-   (replacement gdk-pixbuf/fixed)
+   (version "2.42.4")
    (source (origin
             (method url-fetch)
             (uri (string-append "mirror://gnome/sources/" name "/"
@@ -578,7 +577,7 @@ highlighting and other features typical of a source code editor.")
                                 name "-" version ".tar.xz"))
             (sha256
              (base32
-              "05ggmzwvrxq9w4zcvmrnnd6qplsmb4n95lj4q607c7arzlf6mil3"))))
+              "0k9f9177qxaryaxprwrhqnv5p2gdq4a8i6y05gm98qa8izc5v77y"))))
    (build-system meson-build-system)
    (arguments
     `(#:meson ,meson-0.55
