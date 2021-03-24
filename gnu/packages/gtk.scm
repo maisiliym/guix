@@ -853,7 +853,7 @@ application suites.")
    (license license:lgpl2.0+)
    (home-page "https://www.gtk.org/")))
 
-(define-public gtk+
+(define-public gtk+-3
   (package (inherit gtk+-2)
    (name "gtk+")
    (version "3.24.24")
@@ -945,6 +945,25 @@ application suites.")
     (list (search-path-specification
            (variable "GUIX_GTK3_PATH")
            (files '("lib/gtk-3.0")))))))
+
+(define-public gtk+
+  (package
+    (inherit gtk+-3)
+    (version "4.1.2")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "mirror://gnome/sources/gtk/"
+                                  (version-major+minor version)  "/"
+                                  "gtk-" version ".tar.xz"))
+              (sha256
+               (base32
+                "0xwnc397vsdwwaxvhlqrpa03vni5s0xvlqx4ww4srrf56yj7sh1k"))
+              (patches (search-patches
+                        "gtk4-respect-GUIX_GTK4_PATH.patch"))))
+    (native-search-paths
+     (list (search-path-specification
+            (variable "GUIX_GTK4_PATH")
+            (files '("lib/gtk-4.0")))))))
 
 ;;;
 ;;; Guile bindings.
