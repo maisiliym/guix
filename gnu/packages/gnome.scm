@@ -10634,7 +10634,7 @@ generic enough to work for everyone.")
 (define-public evolution
   (package
     (name "evolution")
-    (version "3.34.2")
+    (version "3.40.0")
     (source (origin
               (method url-fetch)
               (uri (string-append "mirror://gnome/sources/evolution/"
@@ -10642,8 +10642,7 @@ generic enough to work for everyone.")
                                   "evolution-" version ".tar.xz"))
               (sha256
                (base32
-                "164vy8h432pjglafn8y2ms4gsvk3kbgc63h5qp0mk5dv4smsp29c"))
-              (patches (search-patches "evolution-CVE-2020-11879.patch"))))
+                "06ym6ch120z4vqrich8s7q8z9y4z7w1dj10v3j13a64pdjs2f2h3"))))
     (build-system cmake-build-system)
     (arguments
      `(#:imported-modules (,@%cmake-build-system-modules
