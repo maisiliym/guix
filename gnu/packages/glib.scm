@@ -692,7 +692,7 @@ has an ease of use unmatched by other C++ callback libraries.")
 (define glibmm
   (package
     (name "glibmm")
-    (version "2.62.0")
+    (version "2.68.0")
     (source (origin
              (method url-fetch)
              (uri (string-append "mirror://gnome/sources/glibmm/"
@@ -700,7 +700,7 @@ has an ease of use unmatched by other C++ callback libraries.")
                                  "/glibmm-" version ".tar.xz"))
              (sha256
               (base32
-               "1ziwx6r7k7wbvg4qq1rgrv8zninapgrmhn1hs6926a3krh9ryr9n"))))
+               "0xgkyhb2876mcyyib5rk3ya9aingyj68h02nl22yvkhx35rqbwy1"))))
     (build-system gnu-build-system)
     (arguments
      `(#:phases
