@@ -96,10 +96,11 @@ environment variable\n" source-directory)))
   "Compile .el files."
   (let* ((emacs (string-append (assoc-ref inputs "emacs") "/bin/emacs"))
          (out (assoc-ref outputs "out"))
-         (site-lisp (string-append out %install-dir)))
+         (elpa-name-ver (store-directory->elpa-name-version out))
+         (el-dir (string-append out %install-dir "/" elpa-name-ver)))
     (setenv "SHELL" "sh")
     (parameterize ((%emacs emacs))
-      (emacs-byte-compile-directory site-lisp))))
+      (emacs-byte-compile-directory el-dir))))
 
 (define* (patch-el-files #:key outputs #:allow-other-keys)
   "Substitute the absolute \"/bin/\" directory with the right location in the
@@ -116,7 +117,8 @@ store in '.el' files."
       #:binary #t))
 
   (let* ((out (assoc-ref outputs "out"))
-         (site-lisp (string-append out %install-dir))
+         (elpa-name-ver (store-directory->elpa-name-version out))
+         (el-dir (string-append out %install-dir "/" elpa-name-ver))
          ;; (ice-9 regex) uses libc's regexp routines, which cannot deal with
          ;; strings containing NULs.  Filter out such files.  TODO: Remove
          ;; this workaround when <https://bugs.gnu.org/30116> is fixed.
@@ -130,7 +132,7 @@ store in '.el' files."
              (error "patch-el-files: unable to locate " cmd-name))
            (string-append "\"" cmd "\"")))))
 
-    (with-directory-excursion site-lisp
+    (with-directory-excursion el-dir
       ;; Some old '.el' files (e.g., tex-buf.el in AUCTeX) are still
       ;; ISO-8859-1-encoded.
       (unless (false-if-exception (substitute-program-names))
@@ -182,16 +184,22 @@ parallel. PARALLEL-TESTS? is ignored when using a non-make TEST-COMMAND."
 
   (let* ((out (assoc-ref outputs "out"))
          (site-lisp (string-append out %install-dir))
+         (elpa-name-ver (store-directory->elpa-name-version out))
+         (el-dir (string-append site-lisp "/" elpa-name-ver))
          (files-to-install (find-files source install-file?)))
     (cond
      ((not (null? files-to-install))
       (for-each
        (lambda (file)
          (let* ((stripped-file (string-drop file (string-length source)))
-                (target-file (string-append site-lisp stripped-file)))
+                (target-file (string-append el-dir stripped-file)))
            (format #t "`~a' -> `~a'~%" file target-file)
            (install-file file (dirname target-file))))
        files-to-install)
+      (call-with-output-file (string-append site-lisp "/subdirs.el")
+        (lambda (port)
+          (write `(normal-top-level-add-to-load-path (list ,el-dir)) port)
+          (newline port)))
       #t)
      (else
       (format #t "error: No files found to install.\n")
@@ -219,11 +227,11 @@ parallel. PARALLEL-TESTS? is ignored when using a non-make TEST-COMMAND."
   "Generate the autoloads file."
   (let* ((emacs (string-append (assoc-ref inputs "emacs") "/bin/emacs"))
          (out (assoc-ref outputs "out"))
-         (site-lisp (string-append out %install-dir))
          (elpa-name-ver (store-directory->elpa-name-version out))
-         (elpa-name (package-name->name+version elpa-name-ver)))
+         (elpa-name (package-name->name+version elpa-name-ver))
+         (el-dir (string-append out %install-dir "/" elpa-name-ver)))
     (parameterize ((%emacs emacs))
-      (emacs-generate-autoloads elpa-name site-lisp))))
+      (emacs-generate-autoloads elpa-name el-dir))))
 
 (define* (enable-autoloads-compilation #:key outputs #:allow-other-keys)
   "Remove the NO-BYTE-COMPILATION local variable embedded in the generated
