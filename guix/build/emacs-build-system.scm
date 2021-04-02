@@ -26,6 +26,8 @@
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-11)
   #:use-module (srfi srfi-26)
+  #:use-module (ice-9 format)
+  #:use-module (ice-9 ftw)
   #:use-module (ice-9 rdelim)
   #:use-module (ice-9 regex)
   #:use-module (ice-9 match)
@@ -73,24 +75,35 @@ archive, a directory, or an Emacs Lisp file."
         #t)
       (gnu:unpack #:source source)))
 
-(define* (add-source-to-load-path #:key dummy #:allow-other-keys)
-  "Augment the EMACSLOADPATH environment variable with the source directory."
+(define* (expand-load-path #:key (prepend-source? #t) #:allow-other-keys)
+  "Expand EMACSLOADPATH, so that inputs, whose code resides in subdirectories,
+are properly found.
+If @var{prepend-source?} is @code{#t} (the default), also add the current
+directory to EMACSLOADPATH in front of any other directories."
   (let* ((source-directory (getcwd))
          (emacs-load-path (string-split (getenv "EMACSLOADPATH") #\:))
-         ;; XXX: Make sure the Emacs core libraries appear at the end of
-         ;; EMACSLOADPATH, to avoid shadowing any other libraries depended
-         ;; upon.
-         (emacs-load-path-non-core (filter (cut string-contains <>
-                                                "/share/emacs/site-lisp")
-                                           emacs-load-path))
+         (emacs-load-path*
+          (map
+           (lambda (dir)
+             (match (scandir dir (negate (cute member <> '("." ".."))))
+               ((sub) (string-append dir "/" sub))
+               (_ dir)))
+           emacs-load-path))
          (emacs-load-path-value (string-append
-                                 (string-join (cons source-directory
-                                                    emacs-load-path-non-core)
-                                              ":")
+                                 (string-join
+                                  (if prepend-source?
+                                      (cons source-directory emacs-load-path*)
+                                      emacs-load-path*)
+                                  ":")
                                  ":")))
     (setenv "EMACSLOADPATH" emacs-load-path-value)
-    (format #t "source directory ~s prepended to the `EMACSLOADPATH' \
-environment variable\n" source-directory)))
+    (when prepend-source?
+      (format #t "source directory ~s prepended to the `EMACSLOADPATH' \
+environment variable\n" source-directory))
+    (let ((diff (lset-difference string=? emacs-load-path* emacs-load-path)))
+      (unless (null? diff)
+        (format #t "expanded load paths for ~{~a~^, ~}\n"
+                (map basename diff))))))
 
 (define* (build #:key outputs inputs #:allow-other-keys)
   "Compile .el files."
@@ -196,10 +209,6 @@ parallel. PARALLEL-TESTS? is ignored when using a non-make TEST-COMMAND."
            (format #t "`~a' -> `~a'~%" file target-file)
            (install-file file (dirname target-file))))
        files-to-install)
-      (call-with-output-file (string-append site-lisp "/subdirs.el")
-        (lambda (port)
-          (write `(normal-top-level-add-to-load-path (list ,el-dir)) port)
-          (newline port)))
       #t)
      (else
       (format #t "error: No files found to install.\n")
@@ -269,7 +278,7 @@ second hyphen.  This corresponds to 'name-version' as used in ELPA packages."
 (define %standard-phases
   (modify-phases gnu:%standard-phases
     (replace 'unpack unpack)
-    (add-after 'unpack 'add-source-to-load-path add-source-to-load-path)
+    (add-after 'unpack 'expand-load-path expand-load-path)
     (delete 'bootstrap)
     (delete 'configure)
     (delete 'build)
