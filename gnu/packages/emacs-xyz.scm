@@ -6085,11 +6085,11 @@ to a key in your preferred mode.")
                (substitute* "el/CMakeLists.txt"
                  (("share/emacs/site-lisp/SuperCollider")
                   (string-append
-                   "share/emacs/site-lisp")))
+                   "share/emacs/site-lisp/scel-" ,version)))
                ((assoc-ref cmake:%standard-phases 'configure)
                 #:outputs outputs
                 #:configure-flags '("-DSC_EL_BYTECOMPILE=OFF"))))
-           (add-after 'add-source-to-load-path 'add-el-dir-to-emacs-load-path
+           (add-after 'expand-load-path 'add-el-dir-to-emacs-load-path
              (lambda _
                (setenv "EMACSLOADPATH"
                        (string-append (getcwd) "/el:" (getenv "EMACSLOADPATH")))
