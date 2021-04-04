@@ -11115,8 +11115,10 @@ programming and reproducible research.")
                                                    contrib-files
                                                    org+contrib-files)))
                (with-directory-excursion
-                   (string-append out "/share/emacs/site-lisp/org-contrib-"
-                                  ,version)
+                   (string-append out "/share/emacs/site-lisp/"
+                                  (string-drop
+                                   (strip-store-file-name out)
+                                   (string-length "emacs-")))
                  (for-each delete-file duplicates))
                #t))))))
     (propagated-inputs
