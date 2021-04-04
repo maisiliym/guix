@@ -13183,7 +13183,7 @@ variable instead, to remind you of that variable's meaning.")
 	       (substitute* "bin/ert-runner"
 		 (("ERT_RUNNER=\"\\$\\(dirname \\$\\(dirname \\$0\\)\\)")
 		  (string-append "ERT_RUNNER=\"" out
-				 "/share/emacs/site-lisp")))
+				 "/share/emacs/site-lisp/ert-runner-" ,version)))
 	       (install-file "bin/ert-runner" (string-append out "/bin"))
 	       (wrap-program (string-append out "/bin/ert-runner")
 		 (list "EMACSLOADPATH" ":" 'prefix
