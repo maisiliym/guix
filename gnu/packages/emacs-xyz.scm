@@ -12520,13 +12520,18 @@ using Imenu, and Compilation mode support for MSBuild, devenv and xbuild.")
         (base32 "0bs9q62bd7885c39v7x1qz3w1fhpmpdgm72xwsk2yygw0ii425nn"))))
     (build-system emacs-build-system)
     (arguments
-     `(#:include (cons "^lisp/" %default-include)
-       #:phases
+     `(#:phases
        (modify-phases %standard-phases
-         (add-after 'add-source-to-load-path 'add-lisp-dir-to-emacs-load-path
+         (add-after 'expand-load-path 'add-lisp-dir-to-emacs-load-path
            (lambda _
              (setenv "EMACSLOADPATH"
-                     (string-append (getcwd) "/lisp:" (getenv "EMACSLOADPATH"))))))))
+                     (string-append (getcwd) "/lisp:" (getenv "EMACSLOADPATH")))))
+         (replace 'install
+           (lambda* (#:key outputs #:allow-other-keys)
+             (copy-recursively
+              "lisp"
+              (string-append (assoc-ref outputs "out")
+                             "/share/emacs/site-lisp/php-mode-" ,version)))))))
     (propagated-inputs `(("emacs-projectile" ,emacs-projectile)))
     (home-page "https://github.com/ejmr/php-mode")
     (synopsis "Major mode for editing PHP code")
