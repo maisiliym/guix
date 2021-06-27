@@ -18,6 +18,8 @@
 ;;; Copyright © 2021 Rovanion Luckey <rovanion.luckey@gmail.com>
 ;;; Copyright © 2021 Xinglu Chen <public@yoctocell.xyz>
 ;;; Copyright © 2021 Stefan Reichör <stefan@xsteve.at>
+;;; Copyright © 2021 Raghav Gururajan <rg@raghavgururajan.name>
+;;; Copyright © 2021 jgart <jgart@dismail.de>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -46,6 +48,7 @@
   #:use-module (guix build-system python)
   #:use-module (gnu packages autotools)
   #:use-module (gnu packages algebra)
+  #:use-module (gnu packages base)
   #:use-module (gnu packages boost)
   #:use-module (gnu packages check)
   #:use-module (gnu packages compression)
@@ -63,7 +66,9 @@
   #:use-module (gnu packages image)
   #:use-module (gnu packages image-processing)
   #:use-module (gnu packages imagemagick)
+  #:use-module (gnu packages linux)
   #:use-module (gnu packages maths)
+  #:use-module (gnu packages ncurses)
   #:use-module (gnu packages perl)
   #:use-module (gnu packages perl-check)
   #:use-module (gnu packages photo)
@@ -71,9 +76,114 @@
   #:use-module (gnu packages python)
   #:use-module (gnu packages python-xyz)
   #:use-module (gnu packages qt)
+  #:use-module (gnu packages suckless)
+  #:use-module (gnu packages terminals)
+  #:use-module (gnu packages video)
+  #:use-module (gnu packages web)
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages xorg)
   #:use-module (gnu packages))
+
+(define-public ytfzf
+  (package
+    (name "ytfzf")
+    (version "1.2.0")
+    (home-page "https://github.com/pystardust/ytfzf")
+    (source
+     (origin
+       (method git-fetch)
+       (uri
+        (git-reference
+         (url home-page)
+         (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "00d416qb4109pm77ikhnmds8qng90ni2jan9kdnxz7b6sh5f61nz"))
+       (patches
+        (search-patches
+         ;; Pre-requisite for 'patch' phase.
+         "ytfzf-programs.patch"
+         ;; Disables self-update.
+         "ytfzf-updates.patch"))))
+    (build-system gnu-build-system)
+    (arguments
+     `(#:tests? #f                      ;no test suite
+       #:modules
+       ((guix build gnu-build-system)
+        (guix build utils)
+        (srfi srfi-26))
+       #:phases
+       (modify-phases %standard-phases
+         (add-after 'unpack 'patch
+           (lambda* (#:key inputs outputs #:allow-other-keys)
+             (let* ((out (assoc-ref outputs "out"))
+                    (binutils (assoc-ref inputs "binutils"))
+                    (catimg (assoc-ref inputs "catimg"))
+                    (chafa (assoc-ref inputs "chafa"))
+                    (coreutils (assoc-ref inputs "coreutils"))
+                    (curl (assoc-ref inputs "curl"))
+                    (dmenu (assoc-ref inputs "dmenu"))
+                    (fzf (assoc-ref inputs "fzf"))
+                    (catimg (string-apend catimg-pack "/bin/catimg"))
+                    (jp2a (assoc-ref inputs "jp2a"))
+                    (jq (assoc-ref inputs "jq"))
+                    (libnotify (assoc-ref inputs "libnotify"))
+                    (mpv (assoc-ref inputs "mpv"))
+                    (ncurses (assoc-ref inputs "ncurses"))
+                    (python-ueberzug (assoc-ref inputs "python-ueberzug"))
+                    (util-linux (assoc-ref inputs "util-linux"))
+                    (youtube-dl (assoc-ref inputs "youtube-dl")))
+               ;; Use correct $PREFIX path.
+               (substitute* "Makefile"
+                 (("/usr/bin")
+                  (string-apend out "/bin")))
+               ;; Use absolute path to referenced programs.
+               (substitute* "ytfzf"
+                 (("@catimg@")
+                  (string-apend catimg "/bin/catimg"))
+                 (("@chafa@")
+                  (string-apend chafa "/bin/chafa"))
+                 (("@curl@")
+                  (string-apend curl "/bin/curl"))
+                 (("@dmenu@")
+                  (string-apend dmenu "/bin/dmenu"))
+                 (("@fzf@")
+                  (string-apend fzf "/bin/fzf"))
+                 (("@jp2a@")
+                  (string-apend jp2a "/bin/jp2a"))
+                 (("@jq@")
+                  (string-apend jq "/bin/jq"))
+                 (("@mpv@")
+                  (string-apend mpv "/bin/mpv"))
+                 (("@notify-send@")
+                  (string-apend libnotify "/bin/notify-send"))
+                 (("@tput@")
+                  (string-apend ncurses "/bin/tput"))
+                 (("@ueberzug@")
+                  (string-apend python-ueberzug "/bin/ueberzug"))
+                 (("@youtube-dl@")
+                  (string-apend youtube-dl "/bin/youtube-dl"))))))
+         (delete 'configure))))         ;no configure script
+    (inputs
+     `(("binutils" ,binutils)
+       ("catimg" ,catimg)
+       ("chafa" ,chafa)
+       ("coreutils" ,coreutils)
+       ("curl" ,curl)
+       ("dmenu" ,dmenu)
+       ("fzf" ,fzf)
+       ("jp2a" ,jp2a)
+       ("jq" ,jq)
+       ("libnotify" ,libnotify)
+       ("mpv" ,mpv)
+       ("ncurses" ,ncurses)
+       ("python-ueberzug" ,python-ueberzug)
+       ("util-linux" ,util-linux)
+       ("youtube-dl" ,youtube-dl)))
+    (synopsis "Watch PeerTube or YouTube videos from the terminal")
+    (description "@code{ytfzf} is a POSIX script that helps you find PeerTube or
+YouTube videos without requiring API and opens/downloads them using mpv/ytdl.")
+    (license license:gpl3+)))
 
 (define-public feh
   (package
