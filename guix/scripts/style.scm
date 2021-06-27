@@ -217,18 +217,19 @@
 ;;; Simplifying input expressions.
 ;;;
 
-(define (simplify-inputs location package str inputs)
+(define (label-matches? label name)
+  "Return true if LABEL matches NAME, a package name."
+  (or (string=? label name)
+      (and (string-prefix? "python-" label)
+           (string-prefix? "python2-" name)
+           (string=? (string-drop label (string-length "python-"))
+                     (string-drop name (string-length "python2-"))))))
+
+(define* (simplify-inputs location package str inputs
+                          #:key (label-matches? label-matches?))
   "Simplify the inputs field of PACKAGE (a string) at LOCATION; its current
 value is INPUTS the corresponding source code is STR.  Return a string to
 replace STR."
-  (define (label-matches? label name)
-    ;; Return true if LABEL matches NAME, a package name.
-    (or (string=? label name)
-        (and (string-prefix? "python-" label)
-             (string-prefix? "python2-" name)
-             (string=? (string-drop label (string-length "python-"))
-                       (string-drop name (string-length "python2-"))))))
-
   (define (simplify-input-expression return)
     (match-lambda
       ((label ('unquote symbol)) symbol)
@@ -381,8 +382,13 @@ bailing out~%")
               package)
      str)))
 
-(define (simplify-package-inputs package)
-  "Edit the source code of PACKAGE to simplify its inputs field if needed."
+(define* (simplify-package-inputs package
+                                  #:key (policy 'silent))
+  "Edit the source code of PACKAGE to simplify its inputs field if needed.
+POLICY is a symbol that defines whether to simplify inputs; it can one of
+'silent (change only if the resulting derivation is the same), 'safe (change
+only if semantics are known to be unaffected), and 'always (fearlessly
+simplify inputs!)."
   (for-each (lambda (field-name field)
               (match (field package)
                 (()
@@ -390,21 +396,38 @@ bailing out~%")
                 (inputs
                  (match (package-field-location package field-name)
                    (#f
-                    ;; (unless (null? (field package))
-                    ;;   (warning (package-location package)
-                    ;;            (G_ "source location not found for '~a' of '~a'~%")
-                    ;;            field-name (package-name package)))
+                    ;; If the location of FIELD-NAME is not found, it may be
+                    ;; that PACKAGE inherits from another package.
                     #f)
                    (location
-                    (edit-expression (location->source-properties location)
-                                     (lambda (str)
-                                       (simplify-inputs location
-                                                        (package-name package)
-                                                        str inputs))))))))
+                    (edit-expression
+                     (location->source-properties location)
+                     (lambda (str)
+                       (define matches?
+                         (match policy
+                           ('silent
+                            ;; Simplify inputs only when the label matches
+                            ;; perfectly, such that the resulting derivation
+                            ;; is unchanged.
+                            label-matches?)
+                           ('safe
+                            ;; If PACKAGE has no arguments, labels are known
+                            ;; to have no effect: this is a "safe" change, but
+                            ;; it may change the derivation.
+                            (if (null? (package-arguments package))
+                                (const #t)
+                                label-matches?))
+                           ('always
+                            ;; Assume it's gonna be alright.
+                            (const #f))))
+
+                       (simplify-inputs location
+                                        (package-name package)
+                                        str inputs
+                                        #:label-matches? matches?))))))))
             '(inputs native-inputs propagated-inputs)
             (list package-inputs package-native-inputs
                   package-propagated-inputs)))
-
 
 (define (package-location<? p1 p2)
   "Return true if P1's location is \"before\" P2's."
@@ -429,6 +452,14 @@ bailing out~%")
         (option '(#\e "expression") #t #f
                 (lambda (opt name arg result)
                   (alist-cons 'expression arg result)))
+        (option '("input-simplification") #t #f
+                (lambda (opt name arg result)
+                  (let ((symbol (string->symbol arg)))
+                    (unless (memq symbol '(silent safe always))
+                      (leave (G_ "~a: invalid input simplification policy~%")
+                             arg))
+                    (alist-cons 'input-simplification-policy symbol
+                                result))))
 
         (option '(#\h "help") #f #f
                 (lambda args
@@ -445,6 +476,10 @@ Update package definitions to the latest style.\n"))
   -L, --load-path=DIR    prepend DIR to the package module search path"))
   (display (G_ "
   -e, --expression=EXPR  consider the package EXPR evaluates to"))
+  (display (G_ "
+      --input-simplification=POLICY
+                         follow POLICY for package input simplification, one
+                         of 'silent', 'safe', or 'always'"))
   (newline)
   (display (G_ "
   -h, --help             display this help and exit"))
@@ -455,7 +490,7 @@ Update package definitions to the latest style.\n"))
 
 (define %default-options
   ;; Alist of default option values.
-  '())
+  '((input-simplification-policy . silent)))
 
 
 ;;;
@@ -478,8 +513,10 @@ Update package definitions to the latest style.\n"))
                                  (('expression . str)
                                   (read/eval str))
                                  (_ #f))
-                               opts)))
-    (for-each simplify-package-inputs
+                               opts))
+         (policy   (assoc-ref opts 'input-simplification-policy)))
+    (for-each (lambda (package)
+                (simplify-package-inputs package #:policy policy))
               ;; Sort package by source code location so that we start editing
               ;; files from the bottom and going upward.  That way, the
               ;; 'location' field of <package> records is not invalidated as

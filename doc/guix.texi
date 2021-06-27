@@ -12103,6 +12103,28 @@ guix style -e '(@@ (gnu packages gcc) gcc-5)'
 @end example
 
 styles the @code{gcc-5} package definition.
+
+@item --input-simplification=@var{policy}
+Specify the package input simplification policy for cases where an input
+label does not match the corresponding package name.  @var{policy} may
+be one of the following:
+
+@table @code
+@item silent
+Simplify inputs only when the change is ``silent'', meaning that the
+package does not need to be rebuilt (its derivation is unchanged).
+
+@item safe
+Simplify inputs only when that is ``safe'' to do: the package might need
+to be rebuilt, but the change is known to have no observable effect.
+
+@item always
+Simplify inputs even when input labels do not match package names, and
+even if that might have an observable effect.
+@end table
+
+The default is @code{silent}, meaning that input simplifications do not
+trigger any package rebuild.
 @end table
 
 @node Invoking guix lint

@@ -214,6 +214,44 @@
     (list (package-inputs (@ (my-packages) my-coreutils))
           (read-package-field (@ (my-packages) my-coreutils) 'inputs 2))))
 
+(test-equal "input labels, 'safe' policy"
+  (list `(("gmp" ,gmp) ("acl" ,acl))
+        "\
+      (inputs (list gmp acl))\n")
+  (call-with-test-package '((inputs `(("GMP" ,gmp) ("ACL" ,acl)))
+                            (arguments '()))      ;no build system arguments
+    (lambda (directory)
+      (define file
+        (string-append directory "/my-packages.scm"))
+
+      (system* "guix" "style" "-L" directory "my-coreutils"
+               "--input-simplification=safe")
+
+      (load file)
+      (list (package-inputs (@ (my-packages) my-coreutils))
+            (read-package-field (@ (my-packages) my-coreutils) 'inputs)))))
+
+(test-equal "input labels, 'safe' policy, nothing changed"
+  (list `(("GMP" ,gmp) ("ACL" ,acl))
+        "\
+      (inputs `((\"GMP\" ,gmp) (\"ACL\" ,acl)))\n")
+  (call-with-test-package '((inputs `(("GMP" ,gmp) ("ACL" ,acl)))
+                            ;; Non-empty argument list, so potentially unsafe
+                            ;; input simplification.
+                            (arguments
+                             '(#:configure-flags
+                               (assoc-ref %build-inputs "GMP"))))
+    (lambda (directory)
+      (define file
+        (string-append directory "/my-packages.scm"))
+
+      (system* "guix" "style" "-L" directory "my-coreutils"
+               "--input-simplification=safe")
+
+      (load file)
+      (list (package-inputs (@ (my-packages) my-coreutils))
+            (read-package-field (@ (my-packages) my-coreutils) 'inputs)))))
+
 (test-equal "input labels, margin comment"
   (list `(("gmp" ,gmp))
         `(("acl" ,acl))
