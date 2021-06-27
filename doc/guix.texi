@@ -12091,6 +12091,18 @@ appears in an inputs field.  The available options are listed below.
 @itemx -L @var{directory}
 Add @var{directory} to the front of the package module search path
 (@pxref{Package Modules}).
+
+@item --expression=@var{expr}
+@itemx -e @var{expr}
+Style the package @var{expr} evaluates to.
+
+For example, running:
+
+@example
+guix style -e '(@@ (gnu packages gcc) gcc-5)'
+@end example
+
+styles the @code{gcc-5} package definition.
 @end table
 
 @node Invoking guix lint

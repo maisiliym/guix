@@ -420,6 +420,10 @@ bailing out~%")
                 (member "load-path" (option-names option)))
               %standard-build-options)
 
+        (option '(#\e "expression") #t #f
+                (lambda (opt name arg result)
+                  (alist-cons 'expression arg result)))
+
         (option '(#\h "help") #f #f
                 (lambda args
                   (show-help)
@@ -433,6 +437,8 @@ bailing out~%")
 Update package definitions to the latest style.\n"))
   (display (G_ "
   -L, --load-path=DIR    prepend DIR to the package module search path"))
+  (display (G_ "
+  -e, --expression=EXPR  consider the package EXPR evaluates to"))
   (newline)
   (display (G_ "
   -h, --help             display this help and exit"))
@@ -459,17 +465,20 @@ Update package definitions to the latest style.\n"))
     (parse-command-line args %options (list %default-options)
                         #:build-options? #f))
 
-  (let* ((opts  (parse-options))
-         (specs (filter-map (match-lambda
-                              (('argument . spec) spec)
-                              (_ #f))
-                            opts)))
+  (let* ((opts     (parse-options))
+         (packages (filter-map (match-lambda
+                                 (('argument . spec)
+                                  (specification->package spec))
+                                 (('expression . str)
+                                  (read/eval str))
+                                 (_ #f))
+                               opts)))
     (for-each simplify-package-inputs
               ;; Sort package by source code location so that we start editing
               ;; files from the bottom and going upward.  That way, the
               ;; 'location' field of <package> records is not invalidated as
               ;; we modify files.
-              (sort (if (null? specs)
+              (sort (if (null? packages)
                         (fold-packages cons '() #:select? (const #t))
-                        (map specification->package specs))
+                        packages)
                     (negate package-location<?)))))
