@@ -76,8 +76,11 @@
              ((memv chr '(#\( #\[))
               (let/ec return
                 (let liip ((lst '()))
-                  (liip (cons (loop #f (lambda ()
-                                         (return (reverse lst))))
+                  (liip (cons (loop (match lst
+                                      (((? comment?) . _) #t)
+                                      (_ #f))
+                                    (lambda ()
+                                      (return (reverse lst))))
                               lst)))))
              ((memv chr '(#\) #\]))
               (return))
@@ -122,8 +125,11 @@
              (display " " port)
              (display (comment->string comment) port))
            (begin
-             (newline port)
-             (display (make-string indent #\space) port)
+             ;; When already at the beginning of a line, for example because
+             ;; COMMENT follows a margin comment, no need to emit a newline.
+             (unless (= column indent)
+               (newline port)
+               (display (make-string indent #\space) port))
              (display (comment->string comment) port)))
        (display (make-string indent #\space) port)
        indent)
