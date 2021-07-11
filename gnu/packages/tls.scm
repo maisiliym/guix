@@ -40,6 +40,7 @@
   #:use-module (guix download)
   #:use-module (guix git-download)
   #:use-module (guix utils)
+  #:use-module (guix gexp)
   #:use-module (guix build-system gnu)
   #:use-module (guix build-system go)
   #:use-module (guix build-system perl)
@@ -339,9 +340,10 @@ required structures.")
       ;; so we explicitly disallow it here.
       #:disallowed-references ,(list (canonical-package perl))
       #:phases
+      ,#~
       (modify-phases %standard-phases
-       ,@(if (%current-target-system)
-           '((add-before
+       #$@(if (%current-target-system)
+          #~((add-before
                'configure 'set-cross-compile
                (lambda* (#:key target outputs #:allow-other-keys)
                  (setenv "CROSS_COMPILE" (string-append target "-"))
@@ -365,7 +367,7 @@ required structures.")
                             "linux-ppc64")
                            ((string-prefix? "powerpc" target)
                             "linux-ppc"))))))
-           '())
+             #~())
         (replace 'configure
           (lambda* (#:key outputs #:allow-other-keys)
             (let* ((out (assoc-ref outputs "out"))
@@ -375,9 +377,9 @@ required structures.")
                 (("/usr/bin/env")
                  (string-append (assoc-ref %build-inputs "coreutils")
                                 "/bin/env")))
-              (invoke ,@(if (%current-target-system)
-                          '("./Configure")
-                          '("./config"))
+              (invoke #$@(if (%current-target-system)
+                             #~("./Configure")
+                             #~("./config"))
                       "shared"       ;build shared libraries
                       "--libdir=lib"
 
@@ -386,13 +388,13 @@ required structures.")
                       ;; conventional.
                       (string-append "--openssldir=" out
                                      "/share/openssl-"
-                                     ,(package-version this-package))
+                                     #$(package-version this-package))
 
                       (string-append "--prefix=" out)
                       (string-append "-Wl,-rpath," lib)
-                      ,@(if (%current-target-system)
-                          '((getenv "CONFIGURE_TARGET_ARCH"))
-                          '())))))
+                      #$@(if (%current-target-system)
+                             #~((getenv "CONFIGURE_TARGET_ARCH"))
+                             #~())))))
         (add-after 'install 'move-static-libraries
           (lambda* (#:key outputs #:allow-other-keys)
             ;; Move static libraries to the "static" output.
@@ -424,7 +426,7 @@ required structures.")
            ;; scripts.  Remove them to avoid retaining a reference on Perl.
            (let ((out (assoc-ref outputs "out")))
              (delete-file-recursively (string-append out "/share/openssl-"
-                                                     ,(package-version this-package)
+                                                     #$(package-version this-package)
                                                      "/misc"))))))))
    (native-search-paths
     (list (search-path-specification
@@ -469,7 +471,7 @@ required structures.")
        ;; Parallel build is not supported in 1.0.x.
        ((#:parallel-build? _ #f) #f)
        ((#:phases phases)
-        `(modify-phases ,phases
+       #~(modify-phases #$phases
            (add-before 'patch-source-shebangs 'patch-tests
              (lambda* (#:key inputs native-inputs #:allow-other-keys)
                (let ((bash (assoc-ref (or native-inputs inputs) "bash")))
@@ -492,9 +494,9 @@ required structures.")
 	     ;; Override this phase because OpenSSL 1.0 does not understand -rpath.
 	     (lambda* (#:key outputs #:allow-other-keys)
 	       (let ((out (assoc-ref outputs "out")))
-		 (invoke ,@(if (%current-target-system)
-			       '("./Configure")
-			       '("./config"))
+		 (invoke #$@(if (%current-target-system)
+			        #~("./Configure")
+			        #~("./config"))
 			 "shared"                 ;build shared libraries
 			 "--libdir=lib"
 
@@ -502,12 +504,12 @@ required structures.")
 			 ;; PREFIX/ssl.  Change that to something more
 			 ;; conventional.
 			 (string-append "--openssldir=" out
-					"/share/openssl-" ,version)
+					"/share/openssl-" #$version)
 
 			 (string-append "--prefix=" out)
-			 ,@(if (%current-target-system)
-			       '((getenv "CONFIGURE_TARGET_ARCH"))
-			       '())))))
+			 #$@(if (%current-target-system)
+			        '((getenv "CONFIGURE_TARGET_ARCH"))
+			        '())))))
         (delete 'move-extra-documentation)
         (add-after 'install 'move-man3-pages
           (lambda* (#:key outputs #:allow-other-keys)
@@ -532,7 +534,7 @@ required structures.")
                ;; scripts.  Remove them to avoid retaining a reference on Perl.
                (let ((out (assoc-ref outputs "out")))
                  (delete-file-recursively (string-append out "/share/openssl-"
-                                                         ,version "/misc"))
+                                                         #$version "/misc"))
                  #t)))))))))
 
 (define-public libressl
