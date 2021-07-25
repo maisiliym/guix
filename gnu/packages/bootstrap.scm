@@ -168,7 +168,7 @@
     ("powerpc64le-linux" (string-append system "/20210106/" program))
     ("i586-gnu" (string-append system "/20200326/" program))
     ("powerpc-linux" (string-append system "/20200923/bin/" program))
-    ("riscv64-linux" (string-append system "/20210606/bin/" program))
+    ("riscv64-linux" (string-append system "/20210725/bin/" program))
     (_ (string-append system "/" program
                       "?id=44f07d1dc6806e97c4e9ee3e6be883cc59dc666e"))))
 
@@ -373,7 +373,7 @@ or false to signal an error."
                    ("powerpc64le-linux"
                     "/20210106/guile-static-stripped-2.0.14-powerpc64le-linux-gnu.tar.xz")
                    ("riscv64-linux"
-                    "/20210606/guile-3.0.2.tar.xz")
+                    "/20210725/guile-3.0.2.tar.xz")
                    (_
                     "/20131110/guile-2.0.9.tar.xz"))))
 
@@ -533,7 +533,7 @@ $out/bin/guile --version~%"
                                             ("powerpc-linux"
                                              "/20200923/static-binaries.tar.xz")
                                             ("riscv64-linux"
-                                             "/20210606/static-binaries.tar.xz")
+                                             "/20210725/static-binaries.tar.xz")
                                             (_
                                              "/20131110/static-binaries.tar.xz")))
                                      %bootstrap-base-urls))
@@ -616,7 +616,7 @@ $out/bin/guile --version~%"
                                             ("powerpc-linux"
                                              "/20200923/binutils-2.35.1.tar.xz")
                                             ("riscv64-linux"
-                                             "/20210606/binutils-2.34.tar.xz")
+                                             "/20210725/binutils-2.34.tar.xz")
                                             (_
                                              "/20131110/binutils-2.23.2.tar.xz")))
                                      %bootstrap-base-urls))
@@ -706,7 +706,7 @@ $out/bin/guile --version~%"
                                       ("powerpc-linux"
                                        "/20200923/glibc-2.32.tar.xz")
                                       ("riscv64-linux"
-                                       "/20210606/glibc-2.31.tar.xz")
+                                       "/20210725/glibc-2.31.tar.xz")
                                       (_
                                        "/20131110/glibc-2.18.tar.xz")))
                                %bootstrap-base-urls))
@@ -729,7 +729,7 @@ $out/bin/guile --version~%"
                           "1a1df6z8gkaq09md3jy94lixnh20599p58p0s856p10xwjaqr1iz"))
                         ("riscv64-linux"
                          (base32
-                          "0162c4yfnz4272c9z03l28dzn5km05r7h06m3s730yiv2disldla"))
+                          "0d9x80vm7ca1pd2whcmpm1h14zxpb58kqajlxlwffzm04xfsjnxm"))
                         ("i586-gnu"
                          (base32
                           "14ddm10lpbas8bankmn5bcrlqvz1v5dnn1qjzxb19r57vd2w5952"))
@@ -812,7 +812,7 @@ exec ~a/bin/.gcc-wrapped -B~a/lib \
                                        ("powerpc-linux"
                                         "/20200923/gcc-5.5.0.tar.xz")
                                        ("riscv64-linux"
-                                        "/20210606/gcc-7.5.0.tar.xz")
+                                        "/20210725/gcc-7.5.0.tar.xz")
                                        (_
                                         "/20131110/gcc-4.8.2.tar.xz")))
                                 %bootstrap-base-urls))
@@ -835,7 +835,7 @@ exec ~a/bin/.gcc-wrapped -B~a/lib \
                            "151kjsai25vz2s667bgzpisx8f281fpl3n9pxz2yrp9jlnadz3m1"))
                          ("riscv64-linux"
                           (base32
-                           "0w1gm1pz3nsfxi5s14sd4nlwcbwq7709lma6csgm8gm6l6x5m7pn"))
+                           "1k4mbnb54wj2q37fgshf5dfixixqnhn002vhzvi9pnb57xb9v14d"))
                          ("i586-gnu"
                           (base32
                            "1j2zc58wzil71a34h7c70sd68dmqvcscrw3rmn2whq79vd70zvv5"))
