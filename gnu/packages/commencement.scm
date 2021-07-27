@@ -3586,6 +3586,7 @@ exec ~a/bin/~a-~a -B~a/lib -Wl,-dynamic-linker -Wl,~a/~a \"$@\"~%"
 (define (%boot3-inputs)
   ;; 4th stage inputs.
   `(("gcc" ,gcc-final)
+    ("gcc:lib" ,gcc-final "lib")
     ("ld-wrapper" ,ld-wrapper-boot3)
     ,@(alist-delete "gcc" (%boot2-inputs))))
 
