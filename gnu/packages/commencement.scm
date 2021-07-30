@@ -3731,6 +3731,7 @@ exec ~a/bin/~a-~a -B~a/lib -Wl,-dynamic-linker -Wl,~a/~a \"$@\"~%"
       ("ld-wrapper" ,ld-wrapper)
       ("binutils" ,binutils-final)
       ("gcc" ,gcc-final)
+      ("gcc:lib" ,gcc-final "lib")
       ("libc" ,glibc-final)
       ("libc:static" ,glibc-final "static")
       ("locales" ,glibc-utf8-locales-final))))
